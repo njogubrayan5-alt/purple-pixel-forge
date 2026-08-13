@@ -14,7 +14,156 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          is_read: boolean
+          message: string
+          name: string
+          service: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          is_read?: boolean
+          message: string
+          name: string
+          service?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          is_read?: boolean
+          message?: string
+          name?: string
+          service?: string | null
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          features: string[]
+          github: string | null
+          id: string
+          image: string
+          live_demo: string | null
+          long_description: string
+          name: string
+          published: boolean
+          slug: string
+          sort_order: number
+          technologies: string[]
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description?: string
+          features?: string[]
+          github?: string | null
+          id?: string
+          image?: string
+          live_demo?: string | null
+          long_description?: string
+          name: string
+          published?: boolean
+          slug: string
+          sort_order?: number
+          technologies?: string[]
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          features?: string[]
+          github?: string | null
+          id?: string
+          image?: string
+          live_demo?: string | null
+          long_description?: string
+          name?: string
+          published?: boolean
+          slug?: string
+          sort_order?: number
+          technologies?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          created_at: string
+          cta_label: string
+          description: string
+          features: string[]
+          icon: string
+          id: string
+          related_categories: string[]
+          short_text: string
+          slug: string
+          sort_order: number
+          technologies: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          cta_label?: string
+          description?: string
+          features?: string[]
+          icon?: string
+          id?: string
+          related_categories?: string[]
+          short_text?: string
+          slug: string
+          sort_order?: number
+          technologies?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          cta_label?: string
+          description?: string
+          features?: string[]
+          icon?: string
+          id?: string
+          related_categories?: string[]
+          short_text?: string
+          slug?: string
+          sort_order?: number
+          technologies?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value?: Json
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: Json
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
