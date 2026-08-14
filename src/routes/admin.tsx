@@ -59,7 +59,7 @@ function useAdminTable(table: "projects" | "services" | "contact_messages") {
 
 function AdminPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+    <div className="px-4 py-8 sm:px-6">
       <header className="mb-6">
         <p className="text-xs font-semibold uppercase tracking-widest text-primary">Dashboard</p>
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Content admin</h1>
