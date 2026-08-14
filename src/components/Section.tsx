@@ -18,7 +18,7 @@ export function Section({
 }) {
   return (
     <section id={id} className={cn("border-b border-border", className)}>
-      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      <div className="px-4 py-10 sm:px-6">
         {(title || label || action) && (
           <div className="mb-5 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4">
             <div className="min-w-0">

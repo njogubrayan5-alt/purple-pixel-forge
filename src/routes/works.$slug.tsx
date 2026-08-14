@@ -31,7 +31,7 @@ function ProjectDetail() {
   const { project } = Route.useLoaderData();
 
   return (
-    <article className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+    <article className="px-4 py-8 sm:px-6">
       <Link
         to="/works"
         className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"

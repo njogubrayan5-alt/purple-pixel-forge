@@ -38,7 +38,7 @@ function ServiceDetail() {
   const { service, related } = Route.useLoaderData();
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+    <div className="px-4 py-8 sm:px-6">
       <Link
         to="/services"
         className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"

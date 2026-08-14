@@ -16,7 +16,7 @@ export function Hero() {
         className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-30 blur-3xl"
         style={{ backgroundImage: "var(--gradient-primary)" }}
       />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:py-12">
+      <div className="relative grid items-center gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:py-12">
         <div className="animate-rise">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-accent px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-accent-foreground">
             <Sparkles className="h-3.5 w-3.5" />

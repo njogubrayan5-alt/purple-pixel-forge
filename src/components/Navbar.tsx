@@ -18,7 +18,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/80 bg-background/85 backdrop-blur-md">
-      <nav className="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4 sm:px-6">
+      <nav className="flex h-14 items-center gap-4 px-4 sm:px-6">
         <Link to="/" className="min-w-0" onClick={() => setOpen(false)}>
           <Logo />
         </Link>
@@ -59,7 +59,7 @@ export function Navbar() {
 
       {open && (
         <div className="border-t border-border bg-background lg:hidden">
-          <ul className="mx-auto max-w-6xl px-4 py-2 sm:px-6">
+          <ul className="px-4 py-2 sm:px-6">
             {links.map((l) => (
               <li key={l.to}>
                 <Link
