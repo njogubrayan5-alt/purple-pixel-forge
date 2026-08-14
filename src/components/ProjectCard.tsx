@@ -1,13 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import type { Project } from "@/data/projects";
+import { resolveImage } from "@/lib/site-images";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/50">
       <div className="relative aspect-[16/10] overflow-hidden bg-secondary">
         <img
-          src={project.image}
+          src={resolveImage(project.image)}
           alt={`${project.name} interface`}
           loading="lazy"
           width={1200}

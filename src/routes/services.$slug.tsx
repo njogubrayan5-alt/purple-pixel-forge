@@ -1,15 +1,16 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Check } from "lucide-react";
-import { getServiceBySlug } from "@/data/services";
-import { publishedProjects } from "@/data/projects";
+import { getSiteContent } from "@/lib/site-content.functions";
+import { publishedOf } from "@/lib/site-content";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ContactForm } from "@/components/ContactForm";
 
 export const Route = createFileRoute("/services/$slug")({
-  loader: ({ params }) => {
-    const service = getServiceBySlug(params.slug);
+  loader: async ({ params }) => {
+    const content = await getSiteContent();
+    const service = content.services.find((s) => s.slug === params.slug);
     if (!service) throw notFound();
-    const related = publishedProjects().filter((p) =>
+    const related = publishedOf(content.projects).filter((p) =>
       service.relatedCategories.includes(p.category),
     );
     return { service, related };

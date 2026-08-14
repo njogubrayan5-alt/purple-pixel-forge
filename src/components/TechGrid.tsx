@@ -1,7 +1,9 @@
 import { Cpu } from "lucide-react";
-import { technologies } from "@/data/company";
+import { useSiteContent } from "@/lib/site-content-query";
 
 export function TechGrid() {
+  const { settings } = useSiteContent();
+  const technologies = settings.technologies;
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
       {technologies.map((t) => (

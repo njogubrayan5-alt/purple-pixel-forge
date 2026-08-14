@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Section } from "@/components/Section";
 import { ProjectCard } from "@/components/ProjectCard";
-import { publishedProjects } from "@/data/projects";
+import { useSiteContent } from "@/lib/site-content-query";
+import { publishedOf } from "@/lib/site-content";
 
 export const Route = createFileRoute("/works/")({
   head: () => ({
@@ -23,10 +24,11 @@ export const Route = createFileRoute("/works/")({
 });
 
 function WorksPage() {
+  const { projects } = useSiteContent();
   return (
     <Section label="Works" title="Some Of Our Recent Projects">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {publishedProjects().map((p) => (
+        {publishedOf(projects).map((p) => (
           <ProjectCard key={p.id} project={p} />
         ))}
       </div>

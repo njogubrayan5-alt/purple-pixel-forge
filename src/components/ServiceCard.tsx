@@ -5,7 +5,7 @@ import type { Service } from "@/data/services";
 const icons = { Code2, Smartphone, Sparkles, Workflow, Layers3 };
 
 export function ServiceCard({ service }: { service: Service }) {
-  const Icon = icons[service.icon];
+  const Icon = icons[service.icon as keyof typeof icons] ?? Code2;
   return (
     <article className="group flex flex-col rounded-xl border border-border bg-card p-4 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/50">
       <span className="grid h-9 w-9 place-items-center rounded-lg bg-accent text-accent-foreground transition-colors group-hover:bg-gradient-primary group-hover:text-primary-foreground">
