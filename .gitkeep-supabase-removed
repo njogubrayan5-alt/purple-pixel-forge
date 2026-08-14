@@ -1,0 +1,3 @@
+# Supabase integration removed - fully migrated to MongoDB
+# The src/integrations/supabase/ directory has been deleted
+# All admin operations now use MongoDB via src/lib/admin.functions.ts
