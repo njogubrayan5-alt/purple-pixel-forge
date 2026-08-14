@@ -1,19 +1,23 @@
 import { MongoClient, Db, Collection } from "mongodb";
 
-const uri = process.env.MONGODB_URI;
-const dbName = process.env.MONGODB_DB || process.env.MONGODB_DATABASE;
-
-if (!uri) {
-  throw new Error("MONGODB_URI environment variable is not set");
-}
-if (!dbName) {
-  throw new Error("MONGODB_DB / MONGODB_DATABASE environment variable is not set");
-}
-
 /**
- * Cache the client across module reloads to avoid creating multiple connections
- * in dev / serverless environments.
+ * Lazy MongoDB connection helper.
+ *
+ * Avoid throwing at module import time so the server process can start even when
+ * environment variables are not set (prevents a 502 caused by a startup crash).
+ *
+ * If the application actually tries to access the DB without the required env vars,
+ * getDb() will throw a clear error.
  */
+
+function getEnvVar(name: string): string | undefined {
+  const v = process.env[name];
+  return v === "" ? undefined : v;
+}
+
+const uri = getEnvVar("MONGODB_URI");
+const dbName = getEnvVar("MONGODB_DB") ?? getEnvVar("MONGODB_DATABASE");
+
 declare global {
   // eslint-disable-next-line no-var
   var __mongoClientPromise__: Promise<MongoClient> | undefined;
@@ -21,30 +25,54 @@ declare global {
   var __mongoClient__: MongoClient | undefined;
 }
 
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
+let client: MongoClient | undefined;
+let clientPromise: Promise<MongoClient> | undefined;
 
-if (!globalThis.__mongoClientPromise__) {
-  client = new MongoClient(uri);
-  clientPromise = client.connect();
-  globalThis.__mongoClientPromise__ = clientPromise;
-  globalThis.__mongoClient__ = client;
-} else {
-  clientPromise = globalThis.__mongoClientPromise__ as Promise<MongoClient>;
-  client = globalThis.__mongoClient__ as MongoClient;
+function ensureMongoEnv(): void {
+  if (!uri) {
+    throw new Error(
+      "MONGODB_URI environment variable is not set. Set MONGODB_URI in your deployment environment.",
+    );
+  }
+  if (!dbName) {
+    throw new Error(
+      "MONGODB_DB / MONGODB_DATABASE environment variable is not set. Set one of these in your deployment environment.",
+    );
+  }
 }
 
-async function getDb(): Promise<Db> {
-  await clientPromise;
-  return client.db(dbName);
+async function getClient(): Promise<MongoClient> {
+  if (client) return client;
+  if (globalThis.__mongoClientPromise__) {
+    clientPromise = globalThis.__mongoClientPromise__ as Promise<MongoClient>;
+    client = (globalThis.__mongoClient__ as MongoClient) ?? undefined;
+    const resolved = await clientPromise;
+    client = resolved;
+    return client;
+  }
+
+  // Validate env before attempting to connect so errors are clear and delayed
+  ensureMongoEnv();
+
+  const _client = new MongoClient(uri!);
+  const _promise = _client.connect();
+
+  globalThis.__mongoClientPromise__ = _promise;
+  globalThis.__mongoClient__ = _client;
+
+  clientPromise = _promise;
+  client = _client;
+
+  const resolved = await clientPromise;
+  client = resolved;
+  return client;
 }
 
-/**
- * These functions return the MongoDB Collection objects used by the
- * server-side code (site-content.functions.ts expects to call .find(), .sort(), .toArray()).
- *
- * If your actual collection names differ, update these strings to match.
- */
+export async function getDb(): Promise<Db> {
+  const c = await getClient();
+  return c.db(dbName!);
+}
+
 export async function getProjectsCollection<T = any>(): Promise<Collection<T>> {
   const db = await getDb();
   return db.collection<T>("projects");
