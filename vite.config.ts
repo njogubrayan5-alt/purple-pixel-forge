@@ -10,21 +10,21 @@ export default defineConfig({
   },
   vite: {
     ssr: {
-      // Externalize specific node-focused packages that should remain as runtime
-      // dependencies instead of being bundled for SSR. Bundling them (noExternal: true)
-      // causes rolldown to try to resolve node-specific runtime files like
-      // unenv/dist/runtime/node/punycode.mjs which leads to Not a directory errors.
-      external: ["tr46", "unenv", "punycode"],
-      // Keep noExternal empty so we don't force-bundle all deps.
-      noExternal: [],
+      // Externalize specific node-focused packages that should remain runtime
+      // dependencies instead of being bundled for SSR. Ensure we do NOT force
+      // bundling by explicitly disabling noExternal (set to false).
+      external: ["tr46", "unenv", "punycode", "tr46/**", "unenv/**"],
+      // Some higher-level config (from @lovable.dev/vite-tanstack-config) may set
+      // noExternal to true. Explicitly set it to false to prevent forced bundling
+      // of node packages which triggers resolution of node-only runtime files.
+      noExternal: false,
     },
     resolve: {
       tsconfigPaths: true,
       alias: [
-        // Keep the shim as a fallback for any import paths that still resolve to the
-        // problematic runtime path. This should rarely be needed after externalizing,
-        // but it's safe to keep.
+        // Map punycode imports (with or without trailing slash) to our shim
         { find: /^punycode(\/.*)?$/, replacement: path.resolve(__dirname, "src/shims/punycode.mjs") },
+        // Ensure any reference to the unenv runtime file resolves to the shim
         { find: /unenv\/dist\/runtime\/node\/punycode\.mjs$/, replacement: path.resolve(__dirname, "src/shims/punycode.mjs") },
       ],
     },
