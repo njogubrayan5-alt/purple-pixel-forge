@@ -1,10 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "./Logo";
-import { company, contactInfo, socials } from "@/data/company";
-import { services } from "@/data/services";
+import { useSiteContent } from "@/lib/site-content-query";
 
 export function Footer() {
+  const { services, settings } = useSiteContent();
+  const { company, contactInfo, socials } = settings;
   return (
     <footer className="border-t border-border bg-card/40">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
@@ -85,7 +86,10 @@ export function Footer() {
 
       <div className="border-t border-border">
         <p className="mx-auto max-w-6xl px-4 py-4 text-xs text-muted-foreground sm:px-6">
-          © {new Date().getFullYear()} {company.name}. All rights reserved.
+          © {new Date().getFullYear()} {company.name}. All rights reserved.{" "}
+          <Link to="/admin" className="ml-2 hover:text-primary">
+            Admin
+          </Link>
         </p>
       </div>
     </footer>

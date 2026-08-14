@@ -6,9 +6,8 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { ServiceCard } from "@/components/ServiceCard";
 import { Stats } from "@/components/Stats";
 import { TechGrid } from "@/components/TechGrid";
-import { publishedProjects } from "@/data/projects";
-import { services } from "@/data/services";
-import { about } from "@/data/company";
+import { useSiteContent } from "@/lib/site-content-query";
+import { publishedOf } from "@/lib/site-content";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -30,7 +29,9 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const featured = publishedProjects().slice(0, 3);
+  const { projects, services, settings } = useSiteContent();
+  const about = settings.about;
+  const featured = publishedOf(projects).slice(0, 3);
 
   return (
     <>

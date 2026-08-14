@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Section } from "@/components/Section";
 import { ContactForm } from "@/components/ContactForm";
-import { contactInfo, socials } from "@/data/company";
+import { useSiteContent } from "@/lib/site-content-query";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -24,6 +24,8 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const { settings } = useSiteContent();
+  const { contactInfo, socials } = settings;
   return (
     <Section label="Contact" title="Have an idea? Let's build it.">
       <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">

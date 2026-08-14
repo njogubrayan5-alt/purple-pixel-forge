@@ -3,7 +3,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { Section } from "@/components/Section";
 import { Stats } from "@/components/Stats";
 import { TechGrid } from "@/components/TechGrid";
-import { about, company } from "@/data/company";
+import { useSiteContent } from "@/lib/site-content-query";
 import heroDevices from "@/assets/hero-devices.png";
 
 export const Route = createFileRoute("/about")({
@@ -26,6 +26,8 @@ export const Route = createFileRoute("/about")({
 });
 
 function AboutPage() {
+  const { settings } = useSiteContent();
+  const { about, company } = settings;
   return (
     <>
       <Section label={about.label} title={about.heading}>

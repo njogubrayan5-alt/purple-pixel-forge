@@ -1,10 +1,12 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight, Check, Github } from "lucide-react";
-import { getProjectBySlug } from "@/data/projects";
+import { getSiteContent } from "@/lib/site-content.functions";
+import { resolveImage } from "@/lib/site-images";
 
 export const Route = createFileRoute("/works/$slug")({
-  loader: ({ params }) => {
-    const project = getProjectBySlug(params.slug);
+  loader: async ({ params }) => {
+    const content = await getSiteContent();
+    const project = content.projects.find((p) => p.slug === params.slug && p.published);
     if (!project) throw notFound();
     return { project };
   },
@@ -46,7 +48,7 @@ function ProjectDetail() {
       </header>
 
       <img
-        src={project.image}
+        src={resolveImage(project.image)}
         alt={`${project.name} screenshot`}
         width={1200}
         height={800}

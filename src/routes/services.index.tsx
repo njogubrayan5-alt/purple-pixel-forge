@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Section } from "@/components/Section";
 import { ServiceCard } from "@/components/ServiceCard";
-import { services } from "@/data/services";
+import { useSiteContent } from "@/lib/site-content-query";
 
 export const Route = createFileRoute("/services/")({
   head: () => ({
@@ -23,6 +23,7 @@ export const Route = createFileRoute("/services/")({
 });
 
 function ServicesPage() {
+  const { services } = useSiteContent();
   return (
     <Section label="Services" title="Everything We Can Build For You">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

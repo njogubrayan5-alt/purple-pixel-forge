@@ -14,6 +14,9 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { THEME_SCRIPT } from "@/components/ThemeToggle";
+import { Toaster } from "@/components/ui/sonner";
+import { siteContentQueryOptions } from "@/lib/site-content-query";
+
 
 function NotFoundComponent() {
   return (
@@ -102,11 +105,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     scripts: [{ children: THEME_SCRIPT }],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(siteContentQueryOptions),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
+
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
@@ -135,6 +140,7 @@ function RootComponent() {
         </main>
         <Footer />
       </div>
+      <Toaster />
     </QueryClientProvider>
   );
 }
