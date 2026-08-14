@@ -8,7 +8,7 @@ export function Footer() {
   const { company, contactInfo, socials } = settings;
   return (
     <footer className="border-t border-border bg-card/40">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+      <div className="grid gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
         <div>
           <Logo />
           <p className="mt-3 max-w-xs text-sm text-muted-foreground">{company.shortDescription}</p>
@@ -85,7 +85,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-border">
-        <p className="mx-auto max-w-6xl px-4 py-4 text-xs text-muted-foreground sm:px-6">
+        <p className="px-4 py-4 text-xs text-muted-foreground sm:px-6">
           © {new Date().getFullYear()} {company.name}. All rights reserved.{" "}
           <Link to="/admin" className="ml-2 hover:text-primary">
             Admin
