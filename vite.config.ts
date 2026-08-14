@@ -1,10 +1,5 @@
-// @lovable.dev/vite-tanstack-config already includes the following — do NOT add them manually
-// or the app will break with duplicate plugins:
-//   - TanStack devtools (dev-only, first), tanstackStart, viteReact, tailwindcss, tsConfigPaths,
-//     nitro (build-only using cloudflare as a default target), VITE_* env injection, @ path alias,
-//     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
-// You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import path from "path";
 
 export default defineConfig({
   tanstackStart: {
@@ -16,6 +11,14 @@ export default defineConfig({
     ssr: {
       external: [],
       noExternal: true,
+    },
+    resolve: {
+      // prefer native tsconfig paths support instead of the old plugin
+      tsconfigPaths: true,
+      alias: [
+        // Map both "punycode" and "punycode/" imports to the package main file
+        { find: /^punycode(\/.*)?$/, replacement: path.resolve(__dirname, "node_modules/punycode/index.js") },
+      ],
     },
   },
 });
