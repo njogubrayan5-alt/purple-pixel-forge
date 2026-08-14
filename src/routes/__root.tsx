@@ -96,8 +96,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:title", content: "FireboxTechs — We Build Digital Solutions That Matter" },
       { property: "og:description", content: "FireboxTechs turns ideas into websites, applications, AI products and automation. Explore our recent projects and services." },
       { name: "twitter:description", content: "FireboxTechs turns ideas into websites, applications, AI products and automation. Explore our recent projects and services." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/eb623979-911a-48ec-b400-7a0f0bb0656c/id-preview-e7992152--110f15b1-9e38-42ee-900c-dd95582f36a7.lovable.app-1786700517510.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/eb623979-911a-48ec-b400-7a0f0bb0656c/id-preview-e7992152--110f15b1-9e38-42ee-900c-dd95582f36a7.lovable.app-1786700517510.png" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/d940dac1-5917-4ef7-aa0c-7ffdb3cd6040" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/d940dac1-5917-4ef7-aa0c-7ffdb3cd6040" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
