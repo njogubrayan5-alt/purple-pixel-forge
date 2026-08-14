@@ -3,8 +3,20 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Loader2, Plus, RefreshCw, Save, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
-import { siteContentQueryOptions } from "@/lib/site-content-query";
+import {
+  getAdminProjects,
+  createAdminProject,
+  updateAdminProject,
+  deleteAdminProject,
+  getAdminServices,
+  createAdminService,
+  updateAdminService,
+  deleteAdminService,
+  getAdminMessages,
+  deleteAdminMessage,
+  getAdminSettings,
+  updateAdminSetting,
+} from "@/lib/admin.functions";
 import { imageKeys } from "@/lib/site-images";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -42,18 +54,13 @@ const parseCsv = (v: string) =>
     .map((s) => s.trim())
     .filter(Boolean);
 
-function useAdminTable(table: "projects" | "services" | "contact_messages") {
+function useAdminTable(
+  table: "projects" | "services" | "messages",
+  fetch: () => Promise<any>
+) {
   return useQuery({
     queryKey: ["admin", table],
-    queryFn: async () => {
-      const order = table === "contact_messages" ? "created_at" : "sort_order";
-      const { data, error } = await supabase
-        .from(table)
-        .select("*")
-        .order(order, { ascending: table !== "contact_messages" });
-      if (error) throw error;
-      return (data ?? []) as any[];
-    },
+    queryFn: fetch,
   });
 }
 
@@ -133,22 +140,31 @@ function PanelShell({
 }
 
 function ProjectsPanel() {
-  const { data = [], isFetching } = useAdminTable("projects");
+  const { data = [], isFetching } = useAdminTable("projects", getAdminProjects);
   const refresh = useRefresh("projects");
 
   const add = async () => {
-    const { error } = await supabase.from("projects").insert({
-      slug: `new-project-${Date.now()}`,
-      name: "New project",
-      category: "Web",
-      description: "",
-      image: imageKeys[0] ?? "",
-      published: false,
-      sort_order: data.length + 1,
-    });
-    if (error) { toast.error(error.message); return; }
-    toast.success("Project created");
-    refresh();
+    try {
+      await createAdminProject({
+        slug: `new-project-${Date.now()}`,
+        name: "New project",
+        category: "Web",
+        description: "",
+        long_description: "",
+        image: imageKeys[0] ?? "",
+        published: false,
+        sort_order: data.length + 1,
+        features: [],
+        technologies: [],
+        live_demo: null,
+        github: null,
+      });
+      toast.success("Project created");
+      refresh();
+    } catch (error) {
+      toast.error("Failed to create project");
+      console.error(error);
+    }
   };
 
   return (
@@ -168,34 +184,43 @@ function ProjectRow({ row, onSaved }: { row: any; onSaved: () => void }) {
 
   const save = async () => {
     setSaving(true);
-    const { error } = await supabase
-      .from("projects")
-      .update({
-        slug: form.slug,
-        name: form.name,
-        category: form.category,
-        description: form.description,
-        long_description: form.long_description,
-        image: form.image,
-        published: form.published,
-        sort_order: Number(form.sort_order) || 0,
-        features: form.features ?? [],
-        technologies: form.technologies ?? [],
-        live_demo: form.live_demo || null,
-        github: form.github || null,
-      })
-      .eq("id", row.id);
-    setSaving(false);
-    if (error) { toast.error(error.message); return; }
-    toast.success("Saved");
-    onSaved();
+    try {
+      await updateAdminProject({
+        id: row.id,
+        updates: {
+          slug: form.slug,
+          name: form.name,
+          category: form.category,
+          description: form.description,
+          long_description: form.long_description,
+          image: form.image,
+          published: form.published,
+          sort_order: Number(form.sort_order) || 0,
+          features: form.features ?? [],
+          technologies: form.technologies ?? [],
+          live_demo: form.live_demo || null,
+          github: form.github || null,
+        },
+      });
+      toast.success("Saved");
+      onSaved();
+    } catch (error) {
+      toast.error("Failed to save project");
+      console.error(error);
+    } finally {
+      setSaving(false);
+    }
   };
 
   const remove = async () => {
-    const { error } = await supabase.from("projects").delete().eq("id", row.id);
-    if (error) { toast.error(error.message); return; }
-    toast.success("Deleted");
-    onSaved();
+    try {
+      await deleteAdminProject({ id: row.id });
+      toast.success("Deleted");
+      onSaved();
+    } catch (error) {
+      toast.error("Failed to delete project");
+      console.error(error);
+    }
   };
 
   return (
@@ -249,21 +274,29 @@ function ProjectRow({ row, onSaved }: { row: any; onSaved: () => void }) {
 }
 
 function ServicesPanel() {
-  const { data = [], isFetching } = useAdminTable("services");
+  const { data = [], isFetching } = useAdminTable("services", getAdminServices);
   const refresh = useRefresh("services");
 
   const add = async () => {
-    const { error } = await supabase.from("services").insert({
-      slug: `new-service-${Date.now()}`,
-      title: "New service",
-      icon: "Code2",
-      short_text: "",
-      cta_label: "Get Started",
-      sort_order: data.length + 1,
-    });
-    if (error) { toast.error(error.message); return; }
-    toast.success("Service created");
-    refresh();
+    try {
+      await createAdminService({
+        slug: `new-service-${Date.now()}`,
+        title: "New service",
+        icon: "Code2",
+        short_text: "",
+        cta_label: "Get Started",
+        description: "",
+        sort_order: data.length + 1,
+        features: [],
+        technologies: [],
+        related_categories: [],
+      });
+      toast.success("Service created");
+      refresh();
+    } catch (error) {
+      toast.error("Failed to create service");
+      console.error(error);
+    }
   };
 
   return (
@@ -283,32 +316,41 @@ function ServiceRow({ row, onSaved }: { row: any; onSaved: () => void }) {
 
   const save = async () => {
     setSaving(true);
-    const { error } = await supabase
-      .from("services")
-      .update({
-        slug: form.slug,
-        title: form.title,
-        icon: form.icon,
-        short_text: form.short_text,
-        cta_label: form.cta_label,
-        description: form.description,
-        features: form.features ?? [],
-        technologies: form.technologies ?? [],
-        related_categories: form.related_categories ?? [],
-        sort_order: Number(form.sort_order) || 0,
-      })
-      .eq("id", row.id);
-    setSaving(false);
-    if (error) { toast.error(error.message); return; }
-    toast.success("Saved");
-    onSaved();
+    try {
+      await updateAdminService({
+        id: row.id,
+        updates: {
+          slug: form.slug,
+          title: form.title,
+          icon: form.icon,
+          short_text: form.short_text,
+          cta_label: form.cta_label,
+          description: form.description,
+          features: form.features ?? [],
+          technologies: form.technologies ?? [],
+          related_categories: form.related_categories ?? [],
+          sort_order: Number(form.sort_order) || 0,
+        },
+      });
+      toast.success("Saved");
+      onSaved();
+    } catch (error) {
+      toast.error("Failed to save service");
+      console.error(error);
+    } finally {
+      setSaving(false);
+    }
   };
 
   const remove = async () => {
-    const { error } = await supabase.from("services").delete().eq("id", row.id);
-    if (error) { toast.error(error.message); return; }
-    toast.success("Deleted");
-    onSaved();
+    try {
+      await deleteAdminService({ id: row.id });
+      toast.success("Deleted");
+      onSaved();
+    } catch (error) {
+      toast.error("Failed to delete service");
+      console.error(error);
+    }
   };
 
   return (
@@ -357,13 +399,18 @@ function ServiceRow({ row, onSaved }: { row: any; onSaved: () => void }) {
 }
 
 function MessagesPanel() {
-  const { data = [], isFetching } = useAdminTable("contact_messages");
-  const refresh = useRefresh("contact_messages");
+  const { data = [], isFetching } = useAdminTable("messages", getAdminMessages);
+  const refresh = useRefresh("messages");
 
   const remove = async (id: string) => {
-    const { error } = await supabase.from("contact_messages").delete().eq("id", id);
-    if (error) { toast.error(error.message); return; }
-    refresh();
+    try {
+      await deleteAdminMessage({ id });
+      toast.success("Message deleted");
+      refresh();
+    } catch (error) {
+      toast.error("Failed to delete message");
+      console.error(error);
+    }
   };
 
   return (
@@ -403,11 +450,7 @@ function CompanyPanel() {
   const qc = useQueryClient();
   const { data, isFetching } = useQuery({
     queryKey: ["admin", "site_settings"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("site_settings").select("key, value");
-      if (error) throw error;
-      return (data ?? []) as { key: string; value: unknown }[];
-    },
+    queryFn: getAdminSettings,
   });
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   useEffect(() => {
@@ -423,14 +466,15 @@ function CompanyPanel() {
       toast.error("Invalid JSON");
       return;
     }
-    const { error } = await supabase
-      .from("site_settings")
-      .update({ value: parsed as never })
-      .eq("key", key);
-    if (error) { toast.error(error.message); return; }
-    toast.success(`Saved ${key}`);
-    qc.invalidateQueries({ queryKey: ["admin", "site_settings"] });
-    qc.invalidateQueries({ queryKey: ["site-content"] });
+    try {
+      await updateAdminSetting({ key, value: parsed });
+      toast.success(`Saved ${key}`);
+      qc.invalidateQueries({ queryKey: ["admin", "site_settings"] });
+      qc.invalidateQueries({ queryKey: ["site-content"] });
+    } catch (error) {
+      toast.error("Failed to save setting");
+      console.error(error);
+    }
   };
 
   return (
