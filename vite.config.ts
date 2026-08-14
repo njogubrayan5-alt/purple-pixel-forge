@@ -1,10 +1,11 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { fileURLToPath } from "url";
 import path from "path";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    // nitro/vite builds from this
     server: { entry: "server" },
   },
   vite: {
@@ -13,11 +14,12 @@ export default defineConfig({
       noExternal: true,
     },
     resolve: {
-      // prefer native tsconfig paths support instead of the old plugin
       tsconfigPaths: true,
       alias: [
-        // Map both "punycode" and "punycode/" imports to the package main file
-        { find: /^punycode(\/.*)?$/, replacement: path.resolve(__dirname, "node_modules/punycode/index.js") },
+        // Map punycode imports (with or without trailing slash) to our shim
+        { find: /^punycode(\/.*)?$/, replacement: path.resolve(__dirname, "src/shims/punycode.mjs") },
+        // Ensure any reference to the unenv runtime file resolves to the shim
+        { find: /unenv\/dist\/runtime\/node\/punycode\.mjs$/, replacement: path.resolve(__dirname, "src/shims/punycode.mjs") },
       ],
     },
   },
