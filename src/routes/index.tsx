@@ -18,10 +18,10 @@ export const Route = createFileRoute("/")({
         content:
           "FireboxTechs turns ideas into websites, applications, AI products and automation. Explore our recent projects and services.",
       },
-      { property: "og:title", content: "FireboxTechs — Digital Solutions That Matter" },
+      { property: "og:title", content: "FireboxTechs — We Build Digital Solutions That Matter" },
       {
         property: "og:description",
-        content: "Modern websites, apps, AI solutions and automation built by FireboxTechs.",
+        content: "FireboxTechs turns ideas into websites, applications, AI products and automation. Explore our recent projects and services.",
       },
     ],
   }),

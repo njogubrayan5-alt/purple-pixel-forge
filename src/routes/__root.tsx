@@ -83,15 +83,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "FireboxTechs — Digital Products, Apps & AI Solutions" },
+      { title: "FireboxTechs — We Build Digital Solutions That Matter" },
       {
         name: "description",
         content:
-          "FireboxTechs builds modern websites, applications, AI solutions and automation for businesses and individuals.",
+          "FireboxTechs turns ideas into websites, applications, AI products and automation. Explore our recent projects and services.",
       },
       { name: "author", content: "FireboxTechs" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "FireboxTechs — We Build Digital Solutions That Matter" },
+      { name: "twitter:title", content: "FireboxTechs — We Build Digital Solutions That Matter" },
+      { property: "og:description", content: "FireboxTechs turns ideas into websites, applications, AI products and automation. Explore our recent projects and services." },
+      { name: "twitter:description", content: "FireboxTechs turns ideas into websites, applications, AI products and automation. Explore our recent projects and services." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/eb623979-911a-48ec-b400-7a0f0bb0656c/id-preview-e7992152--110f15b1-9e38-42ee-900c-dd95582f36a7.lovable.app-1786700517510.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/eb623979-911a-48ec-b400-7a0f0bb0656c/id-preview-e7992152--110f15b1-9e38-42ee-900c-dd95582f36a7.lovable.app-1786700517510.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
