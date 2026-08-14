@@ -1,5 +1,4 @@
 import { createServerFn } from "@tanstack/react-start";
-import { createClient } from "@supabase/supabase-js";
 import {
   defaultSiteContent,
   type Project,
@@ -7,36 +6,32 @@ import {
   type SiteContent,
   type SiteSettings,
 } from "@/lib/site-content";
+import {
+  getProjectsCollection,
+  getServicesCollection,
+  getSiteSettingsCollection,
+} from "@/lib/mongodb";
 
 export const getSiteContent = createServerFn({ method: "GET" }).handler(
   async (): Promise<SiteContent> => {
-    const url = process.env["SUPABASE_URL"];
-    const key = process.env["SUPABASE_PUBLISHABLE_KEY"];
-    if (!url || !key) return defaultSiteContent;
-
-    const client = createClient(url, key, {
-      auth: { persistSession: false, autoRefreshToken: false },
-      global: {
-        fetch: (input, init) => {
-          const h = new Headers(init?.headers);
-          if (key.startsWith("sb_") && h.get("Authorization") === `Bearer ${key}`) {
-            h.delete("Authorization");
-          }
-          h.set("apikey", key);
-          return fetch(input, { ...init, headers: h });
-        },
-      },
-    });
-
     try {
-      const [projectsRes, servicesRes, settingsRes] = await Promise.all([
-        client.from("projects").select("*").order("sort_order", { ascending: true }),
-        client.from("services").select("*").order("sort_order", { ascending: true }),
-        client.from("site_settings").select("key, value"),
+      const [projectsColl, servicesColl, settingsColl] = await Promise.all([
+        getProjectsCollection(),
+        getServicesCollection(),
+        getSiteSettingsCollection(),
       ]);
 
-      const projects: Project[] = (projectsRes.data ?? []).map((row: any) => ({
-        id: row.id,
+      const [projectsData, servicesData, settingsData] = await Promise.all([
+        projectsColl
+          .find({ published: true })
+          .sort({ sort_order: 1 })
+          .toArray(),
+        servicesColl.find({}).sort({ sort_order: 1 }).toArray(),
+        settingsColl.find({}).toArray(),
+      ]);
+
+      const projects: Project[] = projectsData.map((row: any) => ({
+        id: row._id?.toString() || "",
         slug: row.slug,
         name: row.name,
         category: row.category ?? "",
@@ -50,8 +45,8 @@ export const getSiteContent = createServerFn({ method: "GET" }).handler(
         github: row.github ?? undefined,
       }));
 
-      const services: Service[] = (servicesRes.data ?? []).map((row: any) => ({
-        id: row.id,
+      const services: Service[] = servicesData.map((row: any) => ({
+        id: row._id?.toString() || "",
         slug: row.slug,
         icon: row.icon ?? "Code2",
         title: row.title,
@@ -64,8 +59,8 @@ export const getSiteContent = createServerFn({ method: "GET" }).handler(
       }));
 
       const settings = { ...defaultSiteContent.settings } as SiteSettings;
-      for (const row of settingsRes.data ?? []) {
-        (settings as any)[(row as any).key] = (row as any).value;
+      for (const row of settingsData) {
+        (settings as any)[row.key] = row.value;
       }
 
       return {
@@ -73,7 +68,8 @@ export const getSiteContent = createServerFn({ method: "GET" }).handler(
         services: services.length ? services : defaultSiteContent.services,
         settings,
       };
-    } catch {
+    } catch (error) {
+      console.error("Error fetching site content:", error);
       return defaultSiteContent;
     }
   },
