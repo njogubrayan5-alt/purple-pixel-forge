@@ -1,0 +1,1 @@
+- [Replit deployment target](deployment-target.md) — use Nitro's Node server preset when bundling this MongoDB-backed TanStack Start app for Replit.

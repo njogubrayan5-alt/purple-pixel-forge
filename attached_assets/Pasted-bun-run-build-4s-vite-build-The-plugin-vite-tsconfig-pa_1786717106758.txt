@@ -1,0 +1,126 @@
+bun run build
+4s
+$ vite build
+The plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.
+vite v8.2.0 building client environment for production...
+
+transforming...
+✓ 1952 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/public/assets/proj-cinevault-CpDOB3PJ.jpg       52.69 kB
+.output/public/assets/proj-whatsapp-DwBvX21w.jpg        56.49 kB
+.output/public/assets/proj-fireboxdeploy-Bx6NY2Xl.jpg   70.16 kB
+.output/public/assets/proj-bconnect-y9ZYBp3c.jpg        74.14 kB
+.output/public/assets/proj-codelab-je3sTfXu.jpg         87.82 kB
+.output/public/assets/hero-devices-BqdgaHp-.png        518.79 kB
+.output/public/assets/styles-Bpxud57h.css               79.98 kB │ gzip:  13.60 kB
+.output/public/assets/hero-devices-DvI2YJvd.js           0.05 kB │ gzip:   0.07 kB
+.output/public/assets/check-mZR2JLks.js                  0.12 kB │ gzip:   0.14 kB
+.output/public/assets/loader-circle-6A_C0HeZ.js          0.14 kB │ gzip:   0.15 kB
+.output/public/assets/arrow-left-D0E-ZWg2.js             0.16 kB │ gzip:   0.16 kB
+.output/public/assets/arrow-right-Bv3vODH3.js            0.16 kB │ gzip:   0.16 kB
+.output/public/assets/site-images-MvrWHmmq.js            0.26 kB │ gzip:   0.20 kB
+.output/public/assets/technologies-YB3A6FiJ.js           0.39 kB │ gzip:   0.28 kB
+.output/public/assets/layers-DVMBi3pW.js                 0.42 kB │ gzip:   0.24 kB
+.output/public/assets/services.index-CjyOVZWA.js         0.45 kB │ gzip:   0.31 kB
+.output/public/assets/works.index-DRm73lrZ.js            0.45 kB │ gzip:   0.31 kB
+.output/public/assets/Section-CY5sJvLl.js                0.69 kB │ gzip:   0.40 kB
+.output/public/assets/ProjectCard-k9mSriXG.js            1.40 kB │ gzip:   0.72 kB
+.output/public/assets/contact-0NBakaS4.js                1.85 kB │ gzip:   0.76 kB
+.output/public/assets/about-BrBOxb_W.js                  1.86 kB │ gzip:   0.85 kB
+.output/public/assets/ServiceCard-CjysA4ox.js            2.14 kB │ gzip:   0.98 kB
+.output/public/assets/services._slug-D8K2XWv4.js         2.53 kB │ gzip:   0.94 kB
+.output/public/assets/TechGrid-BWz6OOVu.js               2.94 kB │ gzip:   1.22 kB
+.output/public/assets/ContactForm-BljIsSeT.js            3.11 kB │ gzip:   1.33 kB
+.output/public/assets/works._slug-DIYuOnKF.js            3.37 kB │ gzip:   1.32 kB
+.output/public/assets/react-dom-hcUl9ojR.js              3.55 kB │ gzip:   1.35 kB
+.output/public/assets/routes-DHpnv2hg.js                 6.13 kB │ gzip:   2.05 kB
+.output/public/assets/link-CDt4Sv-l.js                  23.33 kB │ gzip:   8.71 kB
+.output/public/assets/useQuery-DxfReP3S.js              23.80 kB │ gzip:   7.87 kB
+.output/public/assets/admin-DF6tiPFd.js                 38.37 kB │ gzip:  12.53 kB
+.output/public/assets/proj-fireboxdeploy-DLSjszBe.js    46.46 kB │ gzip:  15.68 kB
+.output/public/assets/index-cmw5ZKP9.js                346.41 kB │ gzip: 107.65 kB
+✓ built in 958ms
+vite v8.2.0 building ssr environment for production...
+
+transforming...
+✓ 112 modules transformed.
+rendering chunks...
+computing gzip size...
+node_modules/.nitro/vite/services/ssr/assets/proj-cinevault-CpDOB3PJ.jpg                         52.69 kB
+node_modules/.nitro/vite/services/ssr/assets/proj-whatsapp-DwBvX21w.jpg                          56.49 kB
+node_modules/.nitro/vite/services/ssr/assets/proj-fireboxdeploy-Bx6NY2Xl.jpg                     70.16 kB
+node_modules/.nitro/vite/services/ssr/assets/proj-bconnect-y9ZYBp3c.jpg                          74.14 kB
+node_modules/.nitro/vite/services/ssr/assets/proj-codelab-je3sTfXu.jpg                           87.82 kB
+node_modules/.nitro/vite/services/ssr/assets/hero-devices-BqdgaHp-.png                          518.79 kB
+node_modules/.nitro/vite/services/ssr/assets/styles-Bpxud57h.css                                 79.98 kB │ gzip: 13.60 kB
+node_modules/.nitro/vite/services/ssr/assets/hero-devices-CSKW4sOd.js                             0.15 kB │ gzip:  0.11 kB
+node_modules/.nitro/vite/services/ssr/assets/utils-C_uf36nf.js                                    0.18 kB │ gzip:  0.15 kB
+node_modules/.nitro/vite/services/ssr/assets/empty-plugin-adapters-D9UWiqvJ.js                    0.22 kB │ gzip:  0.16 kB
+node_modules/.nitro/vite/services/ssr/assets/site-content.functions-BMeJ-4ki.js                   0.36 kB │ gzip:  0.25 kB
+node_modules/.nitro/vite/services/ssr/assets/createServerRpc-B90ckaqP.js                          0.40 kB │ gzip:  0.27 kB
+node_modules/.nitro/vite/services/ssr/assets/createSsrRpc-CBA8bIlM.js                             0.60 kB │ gzip:  0.37 kB
+node_modules/.nitro/vite/services/ssr/assets/technologies-DcLXWPUC.js                             0.63 kB │ gzip:  0.35 kB
+node_modules/.nitro/vite/services/ssr/assets/site-content-query-BrEIYm7s.js                       0.64 kB │ gzip:  0.34 kB
+node_modules/.nitro/vite/services/ssr/assets/services.index-Dt-dIS4H.js                           0.71 kB │ gzip:  0.41 kB
+node_modules/.nitro/vite/services/ssr/assets/works.index-CA1ZpNMJ.js                              0.77 kB │ gzip:  0.43 kB
+node_modules/.nitro/vite/services/ssr/assets/site-images-WEudUp1-.js                              0.84 kB │ gzip:  0.42 kB
+node_modules/.nitro/vite/services/ssr/assets/Section-D9UfhgMG.js                                  0.99 kB │ gzip:  0.48 kB
+node_modules/.nitro/vite/services/ssr/assets/works._slug-hDhYztAC.js                              1.14 kB │ gzip:  0.55 kB
+node_modules/.nitro/vite/services/ssr/assets/services._slug-D0Ci_M8U.js                           1.32 kB │ gzip:  0.63 kB
+node_modules/.nitro/vite/services/ssr/assets/ServiceCard-C_-oMtsS.js                              1.56 kB │ gzip:  0.70 kB
+node_modules/.nitro/vite/services/ssr/assets/ProjectCard-DgrXkG6_.js                              1.84 kB │ gzip:  0.84 kB
+node_modules/.nitro/vite/services/ssr/assets/start-DZXRXK2y.js                                    1.95 kB │ gzip:  0.86 kB
+node_modules/.nitro/vite/services/ssr/assets/TechGrid-CklYxHpn.js                                 2.13 kB │ gzip:  0.78 kB
+node_modules/.nitro/vite/services/ssr/assets/about-wDxbcv7w.js                                    2.68 kB │ gzip:  1.03 kB
+node_modules/.nitro/vite/services/ssr/assets/contact-C4nKU2oB.js                                  2.76 kB │ gzip:  0.95 kB
+node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-B5PMTrmW.js               2.93 kB │ gzip:  0.79 kB
+node_modules/.nitro/vite/services/ssr/assets/__23tanstack-start-server-fn-resolver-Bd_UlPyB.js    3.11 kB │ gzip:  1.04 kB
+node_modules/.nitro/vite/services/ssr/assets/createCsrfMiddleware-B2To0gPJ.js                     3.19 kB │ gzip:  1.01 kB
+node_modules/.nitro/vite/services/ssr/assets/services._slug-CqCAdomA.js                           3.56 kB │ gzip:  1.14 kB
+node_modules/.nitro/vite/services/ssr/assets/site-content.functions-dlLZ8Kgd.js                   3.67 kB │ gzip:  1.33 kB
+node_modules/.nitro/vite/services/ssr/assets/ContactForm-Dvu-678n.js                              4.02 kB │ gzip:  1.38 kB
+node_modules/.nitro/vite/services/ssr/assets/works._slug-Brl_Flmg.js                              4.03 kB │ gzip:  1.31 kB
+node_modules/.nitro/vite/services/ssr/index.js                                                    4.61 kB │ gzip:  1.92 kB
+node_modules/.nitro/vite/services/ssr/assets/routes-DVlad_y2.js                                   8.06 kB │ gzip:  2.27 kB
+node_modules/.nitro/vite/services/ssr/assets/createServerFn-CIHAFgYl.js                           9.82 kB │ gzip:  2.99 kB
+node_modules/.nitro/vite/services/ssr/assets/site-content-i9zSVzBV.js                            10.07 kB │ gzip:  3.17 kB
+node_modules/.nitro/vite/services/ssr/assets/admin.functions-0Kpx1P8Y.js                         13.02 kB │ gzip:  2.57 kB
+node_modules/.nitro/vite/services/ssr/assets/admin-DHno1xMy.js                                   20.74 kB │ gzip:  4.84 kB
+node_modules/.nitro/vite/services/ssr/assets/router-B6BSqNqV.js                                  22.60 kB │ gzip:  5.45 kB
+node_modules/.nitro/vite/services/ssr/assets/server-DhWQ71db.js                                  53.11 kB │ gzip: 13.71 kB
+✓ built in 542ms
+[start] [nitro] Building [Nitro] (preset: `cloudflare-module`, compatibility: `2026-08-14`)
+[success] [nitro] Generated public .output/public
+vite v8.2.0 building nitro environment for production...
+[warn] `inlineDynamicImports` option is ignored because the `codeSplitting` option is specified.
+
+transforming...
+✓ 2143 modules transformed.
+✗ Build failed in 215ms
+error during build:
+[31mBuild failed with 1 error:
+
+[UNLOADABLE_DEPENDENCY] Could not load node_modules/unenv/dist/runtime/node/punycode.mjs
+   ╭─[ node_modules/tr46/index.js:3:26 ]
+   │
+ 3 │ const punycode = require("punycode/");
+   │                          ─────┬─────  
+   │                               ╰─────── Not a directory (os error 20)
+───╯
+    at aggregateBindingErrorsIntoJsError (file:///app/node_modules/rolldown/dist/shared/error-DFGNOCle.mjs:48:18)
+    at unwrapBindingResult (file:///app/node_modules/rolldown/dist/shared/error-DFGNOCle.mjs:18:128)
+    at #build (file:///app/node_modules/rolldown/dist/shared/rolldown-build-CdF8HAHX.mjs:3276:34)
+    at async buildEnvironment (file:///app/node_modules/vite/dist/node/chunks/node.js:33669:66)
+    at async Object.build (file:///app/node_modules/vite/dist/node/chunks/node.js:34091:19)
+    at async buildEnvironments (file:///app/node_modules/nitro/dist/vite.mjs:120:17)
+    at async Object.buildApp (file:///app/node_modules/vite/dist/node/chunks/node.js:34085:5)
+    at async CAC.<anonymous> (file:///app/node_modules/vite/dist/node/cli.js:776:3) {
+  errors: [Getter/Setter]
+}
+error: script "build" exited with code 1
+
+Build Failed: build daemon returned an error < failed to solve: process "bun run build" did not complete successfully: exit code: 1 >
+You reached the end of the range
+2026-08-14 17:17
