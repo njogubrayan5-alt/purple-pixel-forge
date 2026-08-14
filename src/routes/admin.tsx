@@ -146,7 +146,7 @@ function ProjectsPanel() {
       published: false,
       sort_order: data.length + 1,
     });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Project created");
     refresh();
   };
@@ -186,14 +186,14 @@ function ProjectRow({ row, onSaved }: { row: any; onSaved: () => void }) {
       })
       .eq("id", row.id);
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Saved");
     onSaved();
   };
 
   const remove = async () => {
     const { error } = await supabase.from("projects").delete().eq("id", row.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Deleted");
     onSaved();
   };
@@ -261,7 +261,7 @@ function ServicesPanel() {
       cta_label: "Get Started",
       sort_order: data.length + 1,
     });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Service created");
     refresh();
   };
@@ -299,14 +299,14 @@ function ServiceRow({ row, onSaved }: { row: any; onSaved: () => void }) {
       })
       .eq("id", row.id);
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Saved");
     onSaved();
   };
 
   const remove = async () => {
     const { error } = await supabase.from("services").delete().eq("id", row.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Deleted");
     onSaved();
   };
@@ -362,7 +362,7 @@ function MessagesPanel() {
 
   const remove = async (id: string) => {
     const { error } = await supabase.from("contact_messages").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     refresh();
   };
 
@@ -420,13 +420,14 @@ function CompanyPanel() {
     try {
       parsed = JSON.parse(drafts[key] ?? "");
     } catch {
-      return toast.error("Invalid JSON");
+      toast.error("Invalid JSON");
+      return;
     }
     const { error } = await supabase
       .from("site_settings")
       .update({ value: parsed as never })
       .eq("key", key);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(`Saved ${key}`);
     qc.invalidateQueries({ queryKey: ["admin", "site_settings"] });
     qc.invalidateQueries({ queryKey: ["site-content"] });
